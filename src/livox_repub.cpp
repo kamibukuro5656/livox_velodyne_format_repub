@@ -60,7 +60,7 @@ void LivoxMsgCbk1(const livox_ros_driver::CustomMsgConstPtr& livox_msg_in) {
 
   unsigned long timebase_ns = livox_msg_in->timebase;
   pcl_ros_msg.header.stamp.fromNSec(timebase_ns);
-  pcl_ros_msg.header.frame_id = "/livox";
+  pcl_ros_msg.header.frame_id = "/velodyne";
   pub_pcl_out1.publish(pcl_ros_msg);
 }
 
@@ -72,7 +72,7 @@ int main(int argc, char** argv) {
 
   ros::Subscriber sub_livox_msg1 = nh.subscribe<livox_ros_driver::CustomMsg>(
       "/livox/lidar", 100, LivoxMsgCbk1);
-  pub_pcl_out1 = nh.advertise<sensor_msgs::PointCloud2>("/livox/points_raw", 100);
+  pub_pcl_out1 = nh.advertise<sensor_msgs::PointCloud2>("/velodyne_points", 100);
 
   ros::spin();
 }
