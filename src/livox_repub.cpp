@@ -15,10 +15,10 @@ void LivoxMsgCbk1(const livox_ros_driver::CustomMsgConstPtr& livox_msg_in) {
   pcl_ros_msg.width = pcd_size;
   pcl_ros_msg.height = 1;
   pcl_ros_msg.is_bigendian = !sys_is_little_endian();
-  pcl_ros_msg.point_step = sizeof(float) * 5 + sizeof(uint16_t) * 1;
+  pcl_ros_msg.point_step = sizeof(float) * 6 + sizeof(uint16_t) * 1;
   pcl_ros_msg.row_step = pcl_ros_msg.point_step * pcd_size;
   pcl_ros_msg.is_dense = true;
-  pcl_ros_msg.fields.resize(6);
+  pcl_ros_msg.fields.resize(7);
 
   pcl_ros_msg.fields[0].name = "x";
   pcl_ros_msg.fields[0].offset = 0;
@@ -44,6 +44,10 @@ void LivoxMsgCbk1(const livox_ros_driver::CustomMsgConstPtr& livox_msg_in) {
   pcl_ros_msg.fields[5].offset = 18;
   pcl_ros_msg.fields[5].datatype = sensor_msgs::PointField::FLOAT32;
   pcl_ros_msg.fields[5].count = 1;
+  pcl_ros_msg.fields[6].name = "range";
+  pcl_ros_msg.fields[6].offset = 22;
+  pcl_ros_msg.fields[6].datatype = sensor_msgs::PointField::FLOAT32;
+  pcl_ros_msg.fields[6].count = 1;
 
   pcl_ros_msg.data.resize(pcd_size * pcl_ros_msg.point_step, 0x00);
   uint8_t *ptr = pcl_ros_msg.data.data();
@@ -54,6 +58,9 @@ void LivoxMsgCbk1(const livox_ros_driver::CustomMsgConstPtr& livox_msg_in) {
     *(reinterpret_cast<float*>(ptr +  12))  = (float)livox_msg_in->points[i].reflectivity;
     *(reinterpret_cast<uint16_t*>(ptr +  16))  = (uint16_t)livox_msg_in->points[i].line;
     *(reinterpret_cast<float*>(ptr +  18))  = (float)livox_msg_in->points[i].offset_time / (float)1e9;
+    *(reinterpret_cast<float*>(ptr +  22))  = sqrt((livox_msg_in->points[i].x * livox_msg_in->points[i].x) + 
+        (livox_msg_in->points[i].y * livox_msg_in->points[i].y) + 
+        (livox_msg_in->points[i].z * livox_msg_in->points[i].z));
 
     ptr += pcl_ros_msg.point_step;
   }
