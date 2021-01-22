@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<package>
+  <name>velodyne_style_repub</name>
+  <version>1.0.0</version>
+  <description>velodyne_style_repub</description>
+
+  <maintainer email="amacoa913@gmail.com">kamibukuro</maintainer>
+
+  <license>TODO</license>
+
+  <author>kamibukuro</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  <run_depend>roscpp</run_depend>
+  <build_depend>rospy</build_depend>
+  <run_depend>rospy</run_depend>
+  
+  <build_depend>tf</build_depend>
+  <run_depend>tf</run_depend>
+
+  <build_depend>livox_ros_driver</build_depend>
+  <run_depend>livox_ros_driver</run_depend>
+
+  <build_depend>std_msgs</build_depend>
+  <run_depend>std_msgs</run_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <run_depend>sensor_msgs</run_depend>
+
+</package>
